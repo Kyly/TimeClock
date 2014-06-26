@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="jcabi-log-0.13">
+  <library name="jna-4.1.0">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/jcabi-log-0.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../jna-4.1.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
