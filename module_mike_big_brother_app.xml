@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_mike_big_brother_app" default="compile.module.mike_big_brother_app">
+  <dirname property="module.mike_big_brother_app.basedir" file="${ant.file.module_mike_big_brother_app}"/>
+  
+  <property name="module.jdk.home.mike_big_brother_app" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.mike_big_brother_app" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.mike_big_brother_app" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.mike_big_brother_app" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="mike_big_brother_app.output.dir" value="${module.mike_big_brother_app.basedir}/out/production/Mike Big Brother App"/>
+  <property name="mike_big_brother_app.testoutput.dir" value="${module.mike_big_brother_app.basedir}/out/test/Mike Big Brother App"/>
+  
+  <path id="mike_big_brother_app.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="mike_big_brother_app.module.production.classpath">
+    <path refid="${module.jdk.classpath.mike_big_brother_app}"/>
+    <path refid="library.jcabi-log-0.13.classpath"/>
+  </path>
+  
+  <path id="mike_big_brother_app.runtime.production.module.classpath">
+    <pathelement location="${mike_big_brother_app.output.dir}"/>
+    <path refid="library.jcabi-log-0.13.classpath"/>
+  </path>
+  
+  <path id="mike_big_brother_app.module.classpath">
+    <path refid="${module.jdk.classpath.mike_big_brother_app}"/>
+    <pathelement location="${mike_big_brother_app.output.dir}"/>
+    <path refid="library.jcabi-log-0.13.classpath"/>
+  </path>
+  
+  <path id="mike_big_brother_app.runtime.module.classpath">
+    <pathelement location="${mike_big_brother_app.testoutput.dir}"/>
+    <pathelement location="${mike_big_brother_app.output.dir}"/>
+    <path refid="library.jcabi-log-0.13.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.mike_big_brother_app">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.mike_big_brother_app">
+    <patternset refid="excluded.from.module.mike_big_brother_app"/>
+  </patternset>
+  
+  <path id="mike_big_brother_app.module.sourcepath">
+    <dirset dir="${module.mike_big_brother_app.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.mike_big_brother_app" depends="compile.module.mike_big_brother_app.production,compile.module.mike_big_brother_app.tests" description="Compile module Mike Big Brother App"/>
+  
+  <target name="compile.module.mike_big_brother_app.production" depends="register.custom.compilers" description="Compile module Mike Big Brother App; production classes">
+    <mkdir dir="${mike_big_brother_app.output.dir}"/>
+    <javac2 destdir="${mike_big_brother_app.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.mike_big_brother_app}/javac">
+      <compilerarg line="${compiler.args.mike_big_brother_app}"/>
+      <bootclasspath refid="mike_big_brother_app.module.bootclasspath"/>
+      <classpath refid="mike_big_brother_app.module.production.classpath"/>
+      <src refid="mike_big_brother_app.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.mike_big_brother_app"/>
+    </javac2>
+    
+    <copy todir="${mike_big_brother_app.output.dir}">
+      <fileset dir="${module.mike_big_brother_app.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.mike_big_brother_app.tests" depends="register.custom.compilers,compile.module.mike_big_brother_app.production" description="compile module Mike Big Brother App; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.mike_big_brother_app" description="cleanup module">
+    <delete dir="${mike_big_brother_app.output.dir}"/>
+    <delete dir="${mike_big_brother_app.testoutput.dir}"/>
+  </target>
+</project>
