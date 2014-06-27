@@ -21,7 +21,7 @@ execution to the terminal via standard err.
 
 The program can also be run by simply double clicking on the jar file itself.
 
-To exit the program right click on the tray icon with the tool tip TimeClock.
+To exit the program right click on the TimeClock tray icon and select exit.
 
 Dependencies
 ------------
