@@ -1,4 +1,5 @@
 import idletime.Win32IdleTime;
+import trayIcon.TimeClockTrayIcon;
 
 import java.net.*;
 import java.io.*;
@@ -23,12 +24,15 @@ public class TimeClock {
         if (args.length > 0)
             debug = args[0].equalsIgnoreCase("--debug");
 
-        System.out.println(debug);
+        System.out.print(debug);
         // Create a scheduled thread pool with 5 core threads
         ScheduledThreadPoolExecutor sch = (ScheduledThreadPoolExecutor)
                 Executors.newScheduledThreadPool(1);
 
         startScheduler(sch);
+
+        // Start Tray Icon
+        TimeClockTrayIcon.startTrayIcon();
     }
 
     private static void startScheduler(final ScheduledExecutorService service) {

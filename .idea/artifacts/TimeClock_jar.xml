@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TimeClock.jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TimeClock_jar</output-path>
+    <root id="archive" name="Mike Big Brother App.jar">
+      <element id="module-output" name="Mike Big Brother App" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../jna-4.1.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
