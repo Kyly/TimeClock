@@ -1,3 +1,5 @@
+import idletime.Win32IdleTime;
+
 import java.net.*;
 import java.io.*;
 import java.awt.Desktop;
@@ -14,21 +16,22 @@ import javax.swing.JOptionPane;
 public class TimeClock {
 
     // Control for debug
-    private static boolean debug = true;
+    private static boolean debug = false;
 
     public static void main(String[] args) throws InterruptedException {
 
-        if (args.length > 1)
-            debug = args[1].equalsIgnoreCase("-debug");
+        if (args.length > 0)
+            debug = args[0].equalsIgnoreCase("--debug");
 
+        System.out.println(debug);
         // Create a scheduled thread pool with 5 core threads
         ScheduledThreadPoolExecutor sch = (ScheduledThreadPoolExecutor)
                 Executors.newScheduledThreadPool(1);
 
-        startMemoryUpdateSchedule(sch);
+        startScheduler(sch);
     }
 
-    private static void startMemoryUpdateSchedule(final ScheduledExecutorService service) {
+    private static void startScheduler(final ScheduledExecutorService service) {
         final ScheduledFuture<?> future = service.scheduleWithFixedDelay(new RunnableHTTPRead(debug), 0, 5,
                 TimeUnit.SECONDS);
 
@@ -51,10 +54,10 @@ public class TimeClock {
                             if (debug)
                                 System.err.println("Watchdog: Sleep failed\n" + se);
 
-                            startMemoryUpdateSchedule(service);
+                            startScheduler(service);
                         }
 
-                        startMemoryUpdateSchedule(service);
+                        startScheduler(service);
                         return;
 
                     } catch (InterruptedException e) {
@@ -75,8 +78,8 @@ class HTTPRead {
 
     private boolean debug = true;
     private final DateFormat fmt = DateFormat.getTimeInstance(DateFormat.LONG);
-    //public static final String CONFPATH = "C:/login/timeclock.conf.txt";
-    private static final String CONFPATH = "/home/kyly/google_drive/Mike Big Brother App/timeclock.conf";
+    public static final String CONFPATH = "C:/login/timeclock.conf.txt";
+    //private static final String CONFPATH = "/home/kyly/google_drive/Mike Big Brother App/timeclock.conf";
     private static final String TIMECLOCKID = "timeClockIdleUrl";
     private static final String TIMECLOCKDIALOG = "timeClockDialogUrl";
     private String timeClockIdleUrl;
@@ -193,14 +196,14 @@ class HTTPRead {
     }
 
     /**
-     * Read from
+     * Connect with url with the amount of time idle and read response from server.
      */
     private void readIdle() {
 
         try {
 
             // Create url from string read from file
-            URL url = new URL(timeClockIdleUrl);
+            URL url = new URL(timeClockIdleUrl + Win32IdleTime.getIdleTimeSecounds());
             URLConnection urlConnection = url.openConnection();
             HttpURLConnection connection = null;
 
